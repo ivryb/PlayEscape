@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.10.2" orientation="isometric" renderorder="right-down" width="43" height="33" tilewidth="256" tileheight="128" infinite="0" backgroundcolor="#000000" nextlayerid="15" nextobjectid="130">
  <editorsettings>
-  <export target="../../Projects/AI-Game/public/game/TiledMap.json" format="json"/>
+  <export target="TiledMap.json" format="json"/>
  </editorsettings>
  <tileset firstgid="1" name="Dungeon" tilewidth="256" tileheight="512" tilecount="288" columns="24">
   <image source="Tilesets/dungeon.png" width="6144" height="6144"/>
@@ -1759,6 +1759,13 @@
     </object>
    </objectgroup>
   </tile>
+  <tile id="57">
+   <objectgroup draworder="index" id="3">
+    <object id="2" x="45.8679" y="450.652">
+     <polygon points="0,0 74.5353,42.4278 124.99,35.5476 192.645,6.88018 177.738,-43.5745 35.5476,-95.1758 -20.6405,-59.6282"/>
+    </object>
+   </objectgroup>
+  </tile>
   <tile id="65">
    <objectgroup draworder="index" id="2">
     <object id="1" x="47.5" y="422">
@@ -2189,7 +2196,7 @@
 0,4,0,0,0,0,0,0,335,335,298,335,0,336,336,336,0,372,372,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,335,335,298,335,0,335,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,298,0,0,0,338,337,0,337,335,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,11,0,0,0,616,658,12,0,0,0,335,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,11,0,588,0,616,658,12,0,0,0,335,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,338,0,0,0,335,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,337,0,337,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,

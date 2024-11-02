@@ -1,14 +1,14 @@
 const bodyForcePower = 0.4;
 
-import { Character } from './Character.js';
+import { Character } from "./models/Character.js";
 
-import { getPlayerDynamicDepth } from './depthSorting.js';
+import { getPlayerDynamicDepth } from "./depthSorting.js";
 
 export class ControllablePlayer extends Character {
   constructor(scene, modelName) {
     super(scene, modelName);
 
-    this.cursors = scene.input.keyboard.addKeys('w,a,s,d,up,down,left,right');
+    this.cursors = scene.input.keyboard.addKeys("w,a,s,d,up,down,left,right");
   }
 
   update() {
@@ -32,11 +32,28 @@ export class ControllablePlayer extends Character {
     }
 
     const power =
-      (up || down) && (left || right) ? bodyForcePower * 0.7 : bodyForcePower;
+      (up || down) && (left || right) ? bodyForcePower * 0.55 : bodyForcePower;
+
+    // Adjust x and y components for isometric movement
+    // For a typical isometric angle of about 26.57 degrees (2:1 pixel ratio)
+    let forceX = 0;
+    let forceY = 0;
+
+    if (left && (up || down))
+      forceX -= power * 1.4142; // sqrt(2) to maintain consistent speed
+    else if (left) forceX -= power;
+
+    if (right && (up || down))
+      forceX += power * 1.4142; // sqrt(2) to maintain consistent speed
+    else if (right) forceX += power;
+
+    if (up) forceY -= power * 0.7071; // sqrt(2)/2 for isometric Y component
+
+    if (down) forceY += power * 0.7071;
 
     this.body.applyForce({
-      x: left ? -power : right ? power : 0,
-      y: up ? -power : down ? power : 0,
+      x: forceX,
+      y: forceY,
     });
 
     const currentDirection = this.characterModel.getAnimationFromMovement(

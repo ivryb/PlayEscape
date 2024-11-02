@@ -1,4 +1,4 @@
-import { Character } from "./Character.js";
+import { Character } from "./models/Character.js";
 
 function getAIConversationSummary(conversation) {}
 

@@ -33,5 +33,21 @@ watch([width, height], ([newWidth, newHeight]) => {
 </script>
 
 <template>
-  <div ref="canvas"></div>
+  <div>
+    <div ref="canvas"></div>
+    <!-- fog of war -->
+    <div class="absolute inset-0 fog-of-war"></div>
+  </div>
 </template>
+
+<style scoped>
+.fog-of-war {
+  background: radial-gradient(
+    circle,
+    transparent,
+    transparent 50%,
+    rgba(0, 0, 0, 0.7),
+    black
+  );
+}
+</style>

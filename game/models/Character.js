@@ -1,4 +1,4 @@
-import { CharacterModelsManager } from "./models/CharacterModelsManager";
+import { CharacterModelsManager } from "./CharacterModelsManager";
 
 export class Character {
   constructor(scene, modelName) {
