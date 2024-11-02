@@ -1,4 +1,4 @@
-import { CharacterModelsManager } from "./CharacterModelsManager.js";
+import { CharacterModelsManager } from "./models/CharacterModelsManager";
 
 export class Character {
   constructor(scene, modelName) {
@@ -23,25 +23,10 @@ export class Character {
   async init(spawnPosition) {
     await this.characterModel.init(this.scene);
 
-    const shadowTextureKey = `shadowTexture_${this.modelName}_${Date.now()}`;
-
-    // Create shadow
-    const shadowTexture = this.scene.textures.createCanvas(
-      shadowTextureKey,
-      100,
-      60
-    );
-    const context = shadowTexture.getContext();
-    const gradient = context.createRadialGradient(50, 30, 0, 50, 30, 40);
-    gradient.addColorStop(0, "rgba(0,0,0,0.3)");
-    gradient.addColorStop(1, "rgba(0,0,0,0)");
-    context.fillStyle = gradient;
-    context.fillRect(0, 0, 100, 60);
-    shadowTexture.refresh();
-
-    this.shadow = this.scene.add.image(0, 0, shadowTextureKey);
+    // Get shadow from character model
+    this.shadow = this.characterModel.createShadow(this.scene);
     this.shadow.setOrigin(0.5, 0.5);
-    this.shadow.setScale(1, 1); // Adjust scale to match previous ellipse size
+    this.shadow.setScale(1, 1);
 
     this.sprite = this.scene.add.sprite(
       0,

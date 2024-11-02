@@ -1,0 +1,81 @@
+{
+  "characters": [
+    {
+      "name": "halberd_warrior",
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "scale": 1.1
+    },
+    {
+      "name": "hot_redhead_chick",
+      "hitBoxShift": 5,
+      "scale": 0.9
+    },
+    {
+      "name": "cool_thief_girl",
+      "scale": 1,
+      "hitBoxShift": -10
+    },
+    {
+      "name": "mechanoid",
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "hitBoxSize": 50,
+      "hitBoxShift": 0
+    },
+    {
+      "name": "medusa",
+      "hitBoxShift": -5
+    },
+    {
+      "name": "crocodile",
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "hitBoxSize": 40,
+      "hitBoxShift": 10
+    },
+    {
+      "name": "reptiloid",
+      "scale": 1.1,
+      "hitBoxSize": 40,
+      "hitBoxShift": 5
+    },
+    {
+      "name": "hell_beast",
+      "scale": 1.1,
+      "hitBoxSize": 50,
+      "hitBoxShift": -20
+    },
+    {
+      "name": "ice_beast",
+      "scale": 1.5,
+      "hitBoxSize": 60,
+      "hitBoxShift": -20
+    },
+    {
+      "name": "three_head_dragon",
+      "scale": 1.5,
+      "hitBoxSize": 70,
+      "hitBoxShift": -40
+    },
+    {
+      "name": "blue_spider",
+      "scale": 1.35,
+      "hitBoxSize": 60,
+      "hitBoxShift": -40
+    },
+    {
+      "name": "brown_spider",
+      "scale": 1.25,
+      "hitBoxSize": 60,
+      "hitBoxShift": -40
+    },
+    {
+      "name": "tough_orc_warrior",
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "scale": 1,
+      "hitBoxSize": 40
+    }
+  ]
+}

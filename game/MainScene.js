@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-import { CharacterModelsManager } from "./CharacterModelsManager";
+import { CharacterModelsManager } from "./models/CharacterModelsManager";
 import { ControllablePlayer } from "./ControllablePlayer";
 
 import { makeDynamicDepthLayer } from "./depthSorting";
@@ -29,13 +29,9 @@ export class MainScene extends Phaser.Scene {
     });
 
     this.load.tilemapTiledJSON("tilemap", "/game/TiledMap.json");
-
-    // CharacterModelsManager.preload(this);
   }
 
   create() {
-    // CharacterModelsManager.createAnimations(this);
-
     this.initMap();
     this.initPhysics();
     this.initPlayers();
