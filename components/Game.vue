@@ -45,9 +45,9 @@ watch([width, height], ([newWidth, newHeight]) => {
   background: radial-gradient(
     circle,
     transparent,
-    transparent 50%,
-    rgba(0, 0, 0, 0.7),
-    black
+    transparent,
+    rgba(0, 0, 0, 0.2),
+    rgba(0, 0, 0, 0.8)
   );
 }
 </style>

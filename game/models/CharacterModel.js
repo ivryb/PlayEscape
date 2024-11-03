@@ -1,4 +1,4 @@
-import { characterStates, characterAngles, getAngle } from "./constants";
+import { characterStates, characterAngles } from "./constants";
 
 export class CharacterModel {
   constructor({
@@ -21,8 +21,7 @@ export class CharacterModel {
     this.hitBoxShift = hitBoxShift;
 
     this.isLoaded = false;
-    this.lastAngle = "";
-    this.defaultTexture = `${name}_idle_135`;
+    this.defaultTexture = `${name}_idle_180`;
   }
 
   preload(scene) {
@@ -75,14 +74,8 @@ export class CharacterModel {
     });
   }
 
-  getAnimationFromMovement(up, down, left, right) {
-    const isMoving = left || right || up || down;
+  getAnimationName(angle, isMoving) {
     const state = isMoving ? "walk" : "idle";
-    const angle = isMoving
-      ? getAngle(up, down, left, right)
-      : this.lastAngle || "180";
-
-    this.lastAngle = angle;
 
     return `${this.name}_${state}_${angle}`;
   }

@@ -1,8 +1,5 @@
-const bodyForcePower = 0.4;
-
-import { Character } from "./models/Character.js";
-
-import { getPlayerDynamicDepth } from "./depthSorting.js";
+import { Character } from "./models/Character";
+import { getAngleFromMovement, getAngleString } from "./models/constants";
 
 export class ControllablePlayer extends Character {
   constructor(scene, modelName) {
@@ -14,6 +11,15 @@ export class ControllablePlayer extends Character {
   update() {
     if (!this.isLoaded) return;
 
+    this.updateMovement();
+    super.update();
+  }
+
+  init(spawnPoint) {
+    return super.init(spawnPoint);
+  }
+
+  updateMovement() {
     const c = this.cursors;
 
     let up = c.up.isDown || c.w.isDown;
@@ -30,6 +36,8 @@ export class ControllablePlayer extends Character {
       left = false;
       right = false;
     }
+
+    const bodyForcePower = 0.4;
 
     const power =
       (up || down) && (left || right) ? bodyForcePower * 0.55 : bodyForcePower;
@@ -56,19 +64,11 @@ export class ControllablePlayer extends Character {
       y: forceY,
     });
 
-    const currentDirection = this.characterModel.getAnimationFromMovement(
-      up,
-      down,
-      left,
-      right
-    );
+    const isMoving = left || right || up || down;
+    const angle = getAngleFromMovement(up, down, left, right);
 
-    if (this.lastDirection !== currentDirection) {
-      this.sprite.play(currentDirection);
-
-      this.lastDirection = currentDirection;
+    if (this.lastAngle !== angle) {
+      this.setDirection(getAngleString(angle), isMoving);
     }
-
-    this.body.setDepth(getPlayerDynamicDepth(this.body));
   }
 }

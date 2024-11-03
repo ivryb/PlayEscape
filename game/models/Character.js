@@ -1,3 +1,4 @@
+import { getPlayerDynamicDepth } from "~/game/utils/depthSorting";
 import { CharacterModelsManager } from "./CharacterModelsManager";
 
 export class Character {
@@ -14,6 +15,9 @@ export class Character {
     this.shadow = null;
 
     this.isLoaded = false;
+
+    this.lastAngle = "180";
+    this.lastIsMoving = false;
 
     useDev(() => {
       console.log("new Character", this);
@@ -68,5 +72,20 @@ export class Character {
     });
 
     return this;
+  }
+
+  update() {
+    if (!this.body) return;
+
+    this.body.setDepth(getPlayerDynamicDepth(this.body));
+  }
+
+  setDirection(angle, isMoving) {
+    if (this.lastIsMoving !== isMoving || this.lastAngle !== angle) {
+      this.sprite.play(this.characterModel.getAnimationName(angle, isMoving));
+
+      this.lastAngle = angle;
+      this.lastIsMoving = isMoving;
+    }
   }
 }

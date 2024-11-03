@@ -1,10 +1,11 @@
 import Phaser from "phaser";
+import { shuffle } from "lodash-es";
 import { CharacterModelsManager } from "./models/CharacterModelsManager";
 import { ControllablePlayer } from "./ControllablePlayer";
+import { AICharacter } from "./AICharacter";
 
-import { makeDynamicDepthLayer } from "./depthSorting";
-
-const spawnPosition = { x: 894, y: 1962 };
+import { makeDynamicDepthLayer } from "./utils/depthSorting";
+import { convertObjectCoordinates } from "./utils/tiled";
 
 export class MainScene extends Phaser.Scene {
   preload() {
@@ -31,11 +32,16 @@ export class MainScene extends Phaser.Scene {
     this.load.tilemapTiledJSON("tilemap", "/game/TiledMap.json");
   }
 
-  create() {
+  async create() {
     this.initMap();
     this.initPhysics();
-    this.initPlayers();
+    this.initSpawnPoints();
+    this.initModels();
     this.initCamera();
+    await this.initAICharacters();
+    await this.initPlayer();
+
+    this.isLoaded = true;
 
     // this.initFpsMeter();
 
@@ -53,9 +59,6 @@ export class MainScene extends Phaser.Scene {
   }
 
   initMap() {
-    this.TILE_W = 256;
-    this.TILE_H = 128;
-
     this.map = this.add.tilemap("tilemap");
 
     useDev(() => console.log("Map", this.map));
@@ -110,9 +113,14 @@ export class MainScene extends Phaser.Scene {
   }
 
   initFpsMeter() {
-    this.fpsText = this.add.text(spawnPosition.x, spawnPosition.y, "", {
-      fontSize: 20,
-    });
+    this.fpsText = this.add.text(
+      this.playerSpawnPoint.x,
+      this.playerSpawnPoint.y,
+      "",
+      {
+        fontSize: 20,
+      }
+    );
 
     this.fpsText.setDepth(this.map.heightInPixels + 1000);
   }
@@ -121,7 +129,10 @@ export class MainScene extends Phaser.Scene {
     useDev(() => console.log("Camera", this.cameras.main));
 
     this.cameras.main.setZoom(1);
-    this.cameras.main.centerOn(spawnPosition.x, spawnPosition.y);
+    this.cameras.main.centerOn(
+      this.playerSpawnPoint.x,
+      this.playerSpawnPoint.y
+    );
   }
 
   initPhysics() {
@@ -139,27 +150,60 @@ export class MainScene extends Phaser.Scene {
     this.floor2DecorLayer.destroy();
   }
 
-  async initPlayers() {
-    const allAvailalbeCharacters = CharacterModelsManager.getCharacters();
-    const playerModels = allAvailalbeCharacters.map((character) => {
-      return character.name;
+  async initPlayer() {
+    this.player = new ControllablePlayer(this, this.playerModel);
+
+    await this.player.init(this.playerSpawnPoint);
+
+    this.cameras.main.startFollow(this.player.body);
+  }
+
+  initModels() {
+    const availableModels = CharacterModelsManager.getCharacters().map(
+      (item) => item.name
+    );
+
+    this.playerModel = availableModels[0];
+    this.availableAiModels = shuffle(availableModels.slice(1));
+  }
+
+  async initAICharacters() {
+    console.log("Available spawn points: ", this.aiSpawnPoints.length);
+    console.log("Available models: ", this.availableAiModels.length);
+
+    this.aiCharacters = this.availableAiModels.map((model) => {
+      return new AICharacter(this, model);
     });
-    this.players = [];
 
-    for (const model of playerModels) {
-      const player = new ControllablePlayer(this, model);
-      await player.init(spawnPosition);
-      this.players.push(player);
-    }
-
-    if (this.players.length > 0) {
-      this.cameras.main.startFollow(this.players[0].body);
+    let i = 0;
+    for (const aiCharacter of this.aiCharacters) {
+      await aiCharacter.init(this.aiSpawnPoints[i++]);
     }
   }
 
+  initSpawnPoints() {
+    const layer = this.map.getObjectLayer("spawns");
+    const spawnPoints = layer.objects.map(convertObjectCoordinates);
+
+    this.playerSpawnPoint = spawnPoints.find(
+      (spawnPoint) => spawnPoint.name === "player"
+    );
+
+    this.aiSpawnPoints = shuffle(
+      spawnPoints.filter((item) => item.name !== "player")
+    );
+  }
+
   update(time, delta) {
-    for (const player of this.players) {
-      player.update();
+    // Update controllable player
+    if (this.player) {
+      this.player.update();
+    }
+
+    if (this.aiCharacters) {
+      for (const aiCharacter of this.aiCharacters) {
+        aiCharacter.update();
+      }
     }
 
     if (this.fpsText) {

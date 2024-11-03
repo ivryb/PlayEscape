@@ -17,13 +17,19 @@
     "vue-router": "^4.2.5"
   },
   "dependencies": {
+    "@ai-sdk/google-vertex": "^0.0.43",
+    "@ai-sdk/openai": "^0.0.71",
+    "@google/generative-ai": "^0.21.0",
     "@nuxtjs/tailwindcss": "^6.8.1",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/forms": "^0.5.6",
     "@tailwindcss/typography": "^0.5.10",
     "@vueuse/core": "^10.5.0",
+    "ai": "^3.4.32",
     "colyseus": "^0.15.0",
     "daisyui": "^3.9.4",
-    "phaser": "^3.60.0"
+    "lodash-es": "^4.17.21",
+    "phaser": "^3.60.0",
+    "sharp": "^0.32.6"
   }
 }
