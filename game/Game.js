@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-import { MainScene } from "~/game/MainScene.js";
+import { MainScene } from "~/game/MainScene";
 
 export function createGame(canvas, width, height) {
   return new Phaser.Game({

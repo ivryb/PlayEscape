@@ -7,6 +7,8 @@ import { AICharacter } from "~/game/AICharacter";
 import { makeDynamicDepthLayer } from "~/game/utils/depthSorting";
 import { convertObjectCoordinates } from "~/game/utils/tiled";
 
+import { useChatManager } from "./state/chatManager";
+
 export class MainScene extends Phaser.Scene {
   preload() {
     this.load.image("Dungeon", "/game/Tilesets/dungeon.png");
@@ -32,6 +34,8 @@ export class MainScene extends Phaser.Scene {
     this.load.tilemapTiledJSON("tilemap", "/game/TiledMap.json");
 
     this.isLoaded = false;
+
+    this.closestCharacter = null;
   }
 
   async create() {
@@ -44,26 +48,10 @@ export class MainScene extends Phaser.Scene {
     await this.initPlayer();
 
     this.isLoaded = true;
-
-    // this.initFpsMeter();
-
-    this.input.addListener("pointerdown", (event) => {
-      if (event.event.metaKey) {
-        useDev(() => {
-          const { floor } = Math;
-
-          console.log(
-            `{ x: ${floor(event.worldX)}, y: ${floor(event.worldY)} }`
-          );
-        });
-      }
-    });
   }
 
   initMap() {
     this.map = this.add.tilemap("tilemap");
-
-    useDev(() => console.log("Map", this.map));
 
     this.tilesets = [
       this.map.addTilesetImage("Dungeon"),
@@ -118,22 +106,7 @@ export class MainScene extends Phaser.Scene {
     });
   }
 
-  initFpsMeter() {
-    this.fpsText = this.add.text(
-      this.playerSpawnPoint.x,
-      this.playerSpawnPoint.y,
-      "",
-      {
-        fontSize: 20,
-      }
-    );
-
-    this.fpsText.setDepth(this.map.heightInPixels + 1000);
-  }
-
   initCamera() {
-    useDev(() => console.log("Camera", this.cameras.main));
-
     this.cameras.main.setZoom(1.25);
     this.cameras.main.centerOn(
       this.playerSpawnPoint.x,
@@ -170,13 +143,10 @@ export class MainScene extends Phaser.Scene {
     );
 
     this.playerModel = availableModels[0];
-    this.availableAiModels = availableModels.slice(1);
+    this.availableAiModels = availableModels.slice(1, 11);
   }
 
   async initAICharacters() {
-    console.log("Available spawn points: ", this.aiSpawnPoints.length);
-    console.log("Available models: ", this.availableAiModels.length);
-
     this.aiCharacters = this.availableAiModels.map((model) => {
       return new AICharacter(this, model);
     });
@@ -200,20 +170,35 @@ export class MainScene extends Phaser.Scene {
     );
   }
 
-  update(time, delta) {
-    // Update controllable player
-    if (this.player) {
-      this.player.update();
-    }
+  updateCharacters() {
+    // We can talk only to one character at a time...
+    let closestCharacter = null;
+    let closestDistance = Infinity;
 
-    if (this.aiCharacters) {
-      for (const aiCharacter of this.aiCharacters) {
-        aiCharacter.update();
+    for (const aiCharacter of this.aiCharacters) {
+      aiCharacter.update();
+
+      if (
+        aiCharacter.isInTalkRadius &&
+        aiCharacter.distanceToPlayer < closestDistance
+      ) {
+        closestDistance = aiCharacter.distanceToPlayer;
+        closestCharacter = aiCharacter;
       }
     }
 
-    if (this.fpsText) {
-      this.fpsText.setText(Math.floor(this.sys.game.loop.actualFps));
+    if (closestCharacter !== this.closestCharacter) {
+      useChatManager().setClosestCharacter(closestCharacter);
     }
+
+    this.closestCharacter = closestCharacter;
+  }
+
+  update() {
+    if (!this.isLoaded) return;
+
+    this.player.update();
+
+    this.updateCharacters();
   }
 }

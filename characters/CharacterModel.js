@@ -3,6 +3,7 @@ import { characterStates, characterAngles } from "./constants";
 export class CharacterModel {
   constructor({
     name,
+    displayName,
     frameWidth = 256,
     frameHeight = 256,
     frameRateWalk = 30,
@@ -12,6 +13,7 @@ export class CharacterModel {
     hitBoxShift = 0,
   }) {
     this.name = name;
+    this.displayName = displayName;
     this.frameWidth = frameWidth;
     this.frameHeight = frameHeight;
     this.frameRateWalk = frameRateWalk;

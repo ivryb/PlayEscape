@@ -13,7 +13,8 @@ export class ControllablePlayer {
     await this.character.init(spawnPosition);
 
     this.cursors = this.scene.input.keyboard.addKeys(
-      "w,a,s,d,up,down,left,right"
+      "w,a,s,d,up,down,left,right",
+      false
     );
   }
 

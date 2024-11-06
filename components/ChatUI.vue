@@ -6,16 +6,24 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { CornerDownLeftIcon, XIcon } from "lucide-vue-next";
 
+const { character } = defineProps({
+  character: {
+    type: Object,
+    required: true,
+  },
+});
+
 const messages = ref([
   {
     id: 1,
-    sender: "Medusa",
-    avatar: "/game/Characters/cool_thief_girl/avatar.png",
+    sender: character.displayName,
+    avatar: `/game/Characters/${character.modelName}/avatar.png`,
     content: "...",
   },
 ]);
 const newMessage = ref("");
 const scrollContainer = ref(null);
+const inputRef = ref(null);
 
 const sendMessage = () => {
   if (newMessage.value.trim()) {
@@ -32,6 +40,8 @@ const sendMessage = () => {
 
 onMounted(() => {
   scrollToBottom(scrollContainer);
+  console.log(inputRef.value);
+  inputRef.value.$el.focus();
 });
 </script>
 
@@ -45,7 +55,9 @@ onMounted(() => {
       <CardHeader
         class="p-2 bg-background/50 flex flex-row justify-between items-center"
       >
-        <CardTitle class="text-lg"> Conversation with Character </CardTitle>
+        <CardTitle class="text-lg">
+          Conversation with {{ character.displayName }}
+        </CardTitle>
         <Button variant="ghost" size="icon" class="h-8 w-8">
           <XIcon />
           <span class="sr-only">Close</span>
@@ -76,6 +88,7 @@ onMounted(() => {
             type="text"
             placeholder="Type a message..."
             class="pr-12 bg-background/50 h-[44px] text-stone-200"
+            ref="inputRef"
           />
           <Button
             type="submit"

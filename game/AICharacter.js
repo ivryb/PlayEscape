@@ -22,6 +22,12 @@ export class AICharacter {
     this.modelName = modelName;
 
     this.character = new Character(scene, modelName);
+
+    this.id = `ai-${modelName}-${Math.random().toString(36).substring(2, 15)}`;
+    this.displayName = this.character.characterModel.displayName;
+
+    this.distanceToPlayer = 0;
+    this.isInTalkRadius = false;
   }
 
   async init(spawnPosition) {
@@ -30,13 +36,14 @@ export class AICharacter {
     this.initTalkRadiusCircle();
   }
 
-  getDistanceToPlayer() {
+  updateDistanceToPlayer() {
     const player = this.scene.player.character;
 
     const dx = player.body.x - this.character.body.x;
     const dy = (player.body.y - this.character.body.y) * 2; // x2 for isometric perspective
 
-    return Math.sqrt(dx * dx + dy * dy);
+    this.distanceToPlayer = Math.sqrt(dx * dx + dy * dy);
+    this.isInTalkRadius = this.distanceToPlayer <= talkRadius;
   }
 
   initTalkRadiusCircle() {
@@ -72,21 +79,21 @@ export class AICharacter {
     );
   }
 
-  updateTalkCircle(distance) {
+  updateTalkCircle() {
     this.talkRadiusCircle.setPosition(
       this.character.body.x,
       this.character.body.y
     );
 
-    if (distance <= talkRadius) {
+    if (this.scene.closestCharacter === this) {
       this.setTalkCircleActive();
     } else {
       this.setTalkCircleInactive();
     }
   }
 
-  lookAtPlayer(distance) {
-    if (distance <= lookRadius) {
+  lookAtPlayer() {
+    if (this.distanceToPlayer <= lookRadius) {
       const player = this.scene.player.character;
       const dx = player.body.x - this.character.body.x;
       const dy = player.body.y - this.character.body.y;
@@ -97,13 +104,11 @@ export class AICharacter {
   }
 
   update() {
-    if (this.scene.isLoaded) {
-      const distance = this.getDistanceToPlayer();
+    this.updateDistanceToPlayer();
 
-      this.updateTalkCircle(distance);
-      this.lookAtPlayer(distance);
+    this.updateTalkCircle();
+    this.lookAtPlayer();
 
-      this.character.update();
-    }
+    this.character.update();
   }
 }

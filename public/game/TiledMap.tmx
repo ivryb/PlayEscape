@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="isometric" renderorder="right-down" width="43" height="33" tilewidth="256" tileheight="128" infinite="0" backgroundcolor="#000000" nextlayerid="16" nextobjectid="185">
+<map version="1.10" tiledversion="1.11.0" orientation="isometric" renderorder="right-down" width="43" height="33" tilewidth="256" tileheight="128" infinite="0" backgroundcolor="#000000" nextlayerid="16" nextobjectid="212">
  <editorsettings>
   <export target="TiledMap.json" format="json"/>
  </editorsettings>
@@ -2662,6 +2662,84 @@
    <point/>
   </object>
   <object id="180" x="1316.23" y="786.335">
+   <point/>
+  </object>
+  <object id="185" x="1831.49" y="657.675">
+   <point/>
+  </object>
+  <object id="186" x="1273.34" y="505.136">
+   <point/>
+  </object>
+  <object id="187" x="919.721" y="1274.77">
+   <point/>
+  </object>
+  <object id="188" x="1253.4" y="1367.5">
+   <point/>
+  </object>
+  <object id="189" x="1476.14" y="1356.24">
+   <point/>
+  </object>
+  <object id="190" x="1362.61" y="1632.71">
+   <point/>
+  </object>
+  <object id="191" x="1547.21" y="1777.45">
+   <point/>
+  </object>
+  <object id="192" x="1737.89" y="1326.77">
+   <point/>
+  </object>
+  <object id="193" x="1758.69" y="1156.9">
+   <point/>
+  </object>
+  <object id="194" x="1144.2" y="894.285">
+   <point/>
+  </object>
+  <object id="195" x="1382.54" y="922.886">
+   <point/>
+  </object>
+  <object id="196" x="1145.93" y="1093.63">
+   <point/>
+  </object>
+  <object id="197" x="460.37" y="1207.16">
+   <point/>
+  </object>
+  <object id="198" x="821.784" y="703.61">
+   <point/>
+  </object>
+  <object id="199" x="1072.26" y="491.269">
+   <point/>
+  </object>
+  <object id="200" x="1560.21" y="485.202">
+   <point/>
+  </object>
+  <object id="201" x="1859.23" y="484.335">
+   <point/>
+  </object>
+  <object id="202" x="1948.5" y="804.148">
+   <point/>
+  </object>
+  <object id="203" x="1753.49" y="836.216">
+   <point/>
+  </object>
+  <object id="204" x="1727.49" y="955.82">
+   <point/>
+  </object>
+  <object id="205" x="1728.35" y="681.076">
+   <point/>
+  </object>
+  <object id="206" x="1464.88" y="743.479">
+   <point/>
+  </object>
+  <object id="208" x="1171.93" y="731.345">
+   <point/>
+  </object>
+  <object id="209" x="1210.07" y="1788.72">
+   <point/>
+  </object>
+  <object id="210" x="589.508" y="492.135">
+   <point/>
+  </object>
+  <object id="211" x="474.237" y="690.61">
    <point/>
   </object>
  </objectgroup>
