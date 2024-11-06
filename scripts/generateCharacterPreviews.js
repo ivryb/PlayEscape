@@ -1,8 +1,11 @@
 import sharp from "sharp";
+import fs from "fs/promises";
 
-import charactersJson from "~/game/models/characters.json";
+import { characters } from "~/characters/characters.json";
 
-const { characters } = charactersJson;
+// This script extracts character previews from the spritesheets.
+// It takes one single frame from the spritesheet
+// and removes the transparent background.
 
 async function generateCharacterPreviews() {
   try {
@@ -14,17 +17,14 @@ async function generateCharacterPreviews() {
 
       const spritePath = `${spritesDir}/${characterName}/idle/225.png`;
 
+      const tmpPath = `${spritesDir}/${characterName}/tmp.png`;
       const previewPath = `${spritesDir}/${characterName}/preview.png`;
 
       // Get dimensions from character config or use defaults
       const frameWidth = character.frameWidth || 256;
       const frameHeight = character.frameHeight || 256;
 
-      // Load the sprite image
-      const image = sharp(spritePath);
-
-      // Extract the first frame from the front-facing row (index 2)
-      await image
+      await sharp(spritePath)
         .extract({
           left: 0,
           top: 0,
@@ -32,7 +32,11 @@ async function generateCharacterPreviews() {
           height: frameHeight,
         })
         .png()
-        .toFile(previewPath);
+        .toFile(tmpPath);
+
+      await sharp(tmpPath).trim().png().toFile(previewPath);
+
+      await fs.rm(tmpPath);
 
       console.log(
         `Generated preview for ${characterName} (${frameWidth}x${frameHeight})`

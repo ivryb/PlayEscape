@@ -1,0 +1,107 @@
+{
+  "characters": [
+    {
+      "name": "halberd_warrior",
+      "displayName": "Halberd Warrior",
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "scale": 1,
+      "description": "A muscular warrior with a bald head and a rugged appearance. He wears a mix of armor, including a shiny silver breastplate and brown leather pants, and wields a large spear with a sharp, three-pronged tip. His stance is confident, suggesting he’s ready for battle."
+    },
+    {
+      "name": "redhead_archer",
+      "displayName": "Redhead Archer",
+      "hitBoxShift": 5,
+      "scale": 0.9,
+      "description": "She has a rugged yet adventurous look, featuring a fitted white shirt with rolled-up sleeves and a pair of blue shorts. She wears sturdy brown boots and has a quiver slung over her shoulder, suggesting she's skilled with a bow. Her hair is tied back, giving her a practical appearance suited for exploration."
+    },
+    {
+      "name": "cool_thief_girl",
+      "displayName": "Cool Thief Girl",
+      "scale": 1,
+      "hitBoxShift": -10,
+      "description": "She has a sleek, dark outfit that blends shades of black and deep blue, giving her a stealthy appearance. She sports a short, spiky hairstyle with vibrant blue highlights, and her outfit is accented with sharp, metallic blades that hint at her agility and combat skills. Her stance is confident and poised, suggesting readiness for action."
+    },
+    {
+      "name": "mechanoid",
+      "displayName": "Mechanoid",
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "hitBoxSize": 50,
+      "hitBoxShift": 0,
+      "description": "He looks like a compact, armored mech with a rugged, angular design. Its surface is a muted brown color, giving it a utilitarian appearance, and it has claw-like hands and sturdy legs that suggest it’s built for both mobility and combat. The overall shape is somewhat squat, with a broad torso and a distinct, powerful stance."
+    },
+    {
+      "name": "medusa",
+      "displayName": "Medusa",
+      "hitBoxShift": -5,
+      "description": "She has a striking appearance with a serpent-like lower body that transitions from a vibrant orange to a deep purple. At the top, a humanoid figure wields a spear, adorned with red hair that flows dramatically. The combination of the sleek, scaly tail and the fierce expression creates an imposing presence."
+    },
+    {
+      "name": "crocodile",
+      "displayName": "Crocodile",
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "hitBoxSize": 40,
+      "hitBoxShift": 10,
+      "description": "A humanoid lizard with vibrant green scales and a long tail. It wears rugged, leather armor adorned with various straps and pouches, suggesting a stealthy or agile nature. In one hand, it wields a gleaming dagger, ready for action, while its posture conveys a sense of readiness and alertness."
+    },
+    {
+      "name": "reptiloid",
+      "displayName": "Reptiloid",
+      "scale": 1.1,
+      "hitBoxSize": 40,
+      "hitBoxShift": 5,
+      "description": "He has a muscular, reptilian body covered in a mottled green and brown skin, giving it a camouflaged appearance. It features long, curved tusks protruding from its mouth and has clawed hands and feet, enhancing its fierce look. The overall stance is crouched, suggesting agility and readiness for action."
+    },
+    {
+      "name": "hell_beast",
+      "displayName": "Hell Beast",
+      "scale": 1.1,
+      "hitBoxSize": 50,
+      "hitBoxShift": -20,
+      "description": "A massive, muscular creature with a striking red skin tone, giving it a fierce appearance. It has large, curved horns protruding from its head and sharp claws on its hands and feet, adding to its menacing look. The creature's body is adorned with fiery accents, enhancing its intimidating presence."
+    },
+    {
+      "name": "ice_beast",
+      "displayName": "Ice Beast",
+      "scale": 1.25,
+      "hitBoxSize": 60,
+      "hitBoxShift": -20,
+      "description": "He has a rugged, armored appearance, covered in sharp, crystalline spikes that give it a formidable look. Its body is primarily a striking blue, with hints of darker shades and some reddish accents, suggesting a powerful and resilient nature. also wields a large, jagged weapon, enhancing its intimidating presence."
+    },
+    {
+      "name": "three_head_dragon",
+      "displayName": "Three Headed Dragon",
+      "scale": 1.5,
+      "hitBoxSize": 70,
+      "hitBoxShift": -40,
+      "description": "A striking three-headed dragon with vibrant red scales and a muscular build. Each head features sharp, elongated horns and menacing eyes, while its long tail is adorned with yellow spikes, adding to its fierce appearance. The creature stands on sturdy legs, showcasing its powerful stance and readiness for battle."
+    },
+    {
+      "name": "blue_spider",
+      "displayName": "Blue Spider",
+      "scale": 1.1,
+      "hitBoxSize": 60,
+      "hitBoxShift": -40,
+      "description": "A small, vividly colored spider with a glossy, iridescent body that shimmers in shades of blue and green. Its long, spindly legs are slightly translucent, giving it an ethereal appearance, while its body is adorned with intricate patterns that resemble gemstones. Overall, it has a mystical and otherworldly vibe, making it stand out in any environment."
+    },
+    {
+      "name": "brown_spider",
+      "displayName": "Brown Spider",
+      "scale": 1.1,
+      "hitBoxSize": 60,
+      "hitBoxShift": -40,
+      "description": "A small, menacing spider with a shiny, bronze-colored body and long, spindly legs. Its head is slightly larger, featuring intricate patterns that give it a unique, almost armored appearance. The overall look is both creepy and intriguing, making it stand out in any setting."
+    },
+    {
+      "name": "tough_orc_warrior",
+      "displayName": "Tough Orc Warrior",
+      "frameWidth": 320,
+      "frameHeight": 320,
+      "scale": 1,
+      "hitBoxSize": 40,
+      "description": "A large, muscular figure clad in rugged, patchwork armor that looks like it’s made from various materials, giving it a weathered appearance. He has a thick, scruffy beard and long hair, and carries a long spear slung over his shoulder, adding to his imposing presence. His stance suggests strength and readiness for battle, with a fierce expression that hints at a tough background."
+    }
+  ]
+}

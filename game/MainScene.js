@@ -1,11 +1,11 @@
 import Phaser from "phaser";
 import { shuffle } from "lodash-es";
-import { CharacterModelsManager } from "./models/CharacterModelsManager";
-import { ControllablePlayer } from "./ControllablePlayer";
-import { AICharacter } from "./AICharacter";
+import { CharacterModelsManager } from "~/characters/CharacterModelsManager";
+import { ControllablePlayer } from "~/game/ControllablePlayer";
+import { AICharacter } from "~/game/AICharacter";
 
-import { makeDynamicDepthLayer } from "./utils/depthSorting";
-import { convertObjectCoordinates } from "./utils/tiled";
+import { makeDynamicDepthLayer } from "~/game/utils/depthSorting";
+import { convertObjectCoordinates } from "~/game/utils/tiled";
 
 export class MainScene extends Phaser.Scene {
   preload() {
@@ -30,6 +30,8 @@ export class MainScene extends Phaser.Scene {
     });
 
     this.load.tilemapTiledJSON("tilemap", "/game/TiledMap.json");
+
+    this.isLoaded = false;
   }
 
   async create() {
@@ -70,46 +72,50 @@ export class MainScene extends Phaser.Scene {
       this.map.addTilesetImage("Bases"),
     ];
 
-    this.groundLayer = this.map.createLayer("Ground", this.tilesets, 0, 0);
+    this.groundLayer = this.map.createLayer("ground", this.tilesets, 0, 0);
+    this.groundLayer.setDepth(0);
 
-    this.worldLayer = this.map.createLayer(
-      "World_objects",
+    this.underPlayerLayer = this.map.createLayer(
+      "under_player",
+      this.tilesets,
+      0,
+      0
+    );
+    this.underPlayerLayer.setDepth(2);
+
+    this.dynamicDepthLayer1 = this.map.createLayer(
+      "dynamic_depth_layer1",
       this.tilesets,
       0,
       0
     );
 
-    this.decorLayer = this.map.createLayer(
-      "World_objects_decor",
+    this.dynamicDepthLayer2 = this.map.createLayer(
+      "dynamic_depth_layer2",
       this.tilesets,
       0,
       0
     );
 
-    this.floor2Layer = this.map.createLayer("Floor_2", this.tilesets, 0, 0);
-
-    this.floor2DecorLayer = this.map.createLayer(
-      "Floor_2_decor",
+    this.overPlayerLayer = this.map.createLayer(
+      "over_player",
       this.tilesets,
       0,
       0
     );
+    this.overPlayerLayer.setDepth(this.map.heightInPixels + 999);
 
     this.layers = [
       this.groundLayer,
-      this.worldLayer,
-      this.decorLayer,
-      this.floor2Layer,
-      this.floor2DecorLayer,
+      this.underPlayerLayer,
+      this.dynamicDepthLayer1,
+      this.overPlayerLayer,
+      this.dynamicDepthLayer2,
     ];
 
-    this.layers.map((layer, i) => {
+    this.layers.map((layer) => {
       layer.setCullPadding(10, 10);
     });
-
-    this.groundLayer.setDepth(0);
-    this.worldLayer.setDepth(1);
-    this.floor2Layer.setDepth(this.map.heightInPixels + 999);
   }
 
   initFpsMeter() {
@@ -128,7 +134,7 @@ export class MainScene extends Phaser.Scene {
   initCamera() {
     useDev(() => console.log("Camera", this.cameras.main));
 
-    this.cameras.main.setZoom(1);
+    this.cameras.main.setZoom(1.25);
     this.cameras.main.centerOn(
       this.playerSpawnPoint.x,
       this.playerSpawnPoint.y
@@ -143,11 +149,11 @@ export class MainScene extends Phaser.Scene {
 
     this.matter.world.disableGravity();
 
-    makeDynamicDepthLayer(this, this.decorLayer);
-    makeDynamicDepthLayer(this, this.floor2DecorLayer);
+    makeDynamicDepthLayer(this, this.dynamicDepthLayer1);
+    makeDynamicDepthLayer(this, this.dynamicDepthLayer2);
 
-    this.decorLayer.destroy();
-    this.floor2DecorLayer.destroy();
+    this.dynamicDepthLayer1.destroy();
+    this.dynamicDepthLayer2.destroy();
   }
 
   async initPlayer() {
@@ -155,16 +161,16 @@ export class MainScene extends Phaser.Scene {
 
     await this.player.init(this.playerSpawnPoint);
 
-    this.cameras.main.startFollow(this.player.body);
+    this.cameras.main.startFollow(this.player.character.body);
   }
 
   initModels() {
-    const availableModels = CharacterModelsManager.getCharacters().map(
-      (item) => item.name
+    const availableModels = shuffle(
+      CharacterModelsManager.getCharacters().map((item) => item.name)
     );
 
     this.playerModel = availableModels[0];
-    this.availableAiModels = shuffle(availableModels.slice(1));
+    this.availableAiModels = availableModels.slice(1);
   }
 
   async initAICharacters() {

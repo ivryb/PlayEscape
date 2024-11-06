@@ -1,6 +1,6 @@
 // depth calculation for the player — based on their Y coordinate and X position
 export const getPlayerDynamicDepth = (player) => {
-  return player.y + 10;
+  return player.y;
 };
 
 // depth calculation for tiles that have a hitbox

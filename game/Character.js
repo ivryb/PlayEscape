@@ -1,5 +1,5 @@
 import { getPlayerDynamicDepth } from "~/game/utils/depthSorting";
-import { CharacterModelsManager } from "./CharacterModelsManager";
+import { CharacterModelsManager } from "~/characters/CharacterModelsManager";
 
 export class Character {
   constructor(scene, modelName) {
@@ -28,9 +28,7 @@ export class Character {
     await this.characterModel.init(this.scene);
 
     // Get shadow from character model
-    this.shadow = this.characterModel.createShadow(this.scene);
-    this.shadow.setOrigin(0.5, 0.5);
-    this.shadow.setScale(1, 1);
+    this.shadow = this.createShadow();
 
     this.sprite = this.scene.add.sprite(
       0,
@@ -75,7 +73,7 @@ export class Character {
   }
 
   update() {
-    if (!this.body) return;
+    if (!this.isLoaded) return;
 
     this.body.setDepth(getPlayerDynamicDepth(this.body));
   }
@@ -87,5 +85,53 @@ export class Character {
       this.lastAngle = angle;
       this.lastIsMoving = isMoving;
     }
+  }
+
+  createShadow() {
+    const shadowTextureKey = `shadowTexture_${
+      this.characterModel.name
+    }_${Date.now()}`;
+
+    // Calculate shadow dimensions based on hitbox
+    const shadowWidth = this.characterModel.hitBoxSize * 2.5;
+    const shadowHeight = shadowWidth / 2;
+    const centerX = shadowWidth / 2;
+    const centerY = shadowHeight / 2;
+
+    // Create shadow
+    const shadowTexture = this.scene.textures.createCanvas(
+      shadowTextureKey,
+      shadowWidth,
+      shadowHeight
+    );
+    const context = shadowTexture.getContext();
+
+    // Scale context to create elliptical gradient for isometric perspective
+    context.scale(1, 0.5);
+
+    const gradient = context.createRadialGradient(
+      centerX,
+      centerY * 2,
+      0,
+      centerX,
+      centerY * 2,
+      shadowWidth / 2
+    );
+
+    gradient.addColorStop(0, "rgba(0,0,0,0.5)");
+    gradient.addColorStop(1, "rgba(0,0,0,0)");
+    context.fillStyle = gradient;
+    context.fillRect(0, 0, shadowWidth, shadowHeight * 2);
+
+    context.setTransform(1, 0, 0, 1, 0, 0);
+
+    shadowTexture.refresh();
+
+    const shadow = this.scene.add.image(0, 0, shadowTextureKey);
+
+    shadow.setOrigin(0.5, 0.5);
+    shadow.setScale(1, 1);
+
+    return shadow;
   }
 }

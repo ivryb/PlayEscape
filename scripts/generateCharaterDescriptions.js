@@ -51,7 +51,7 @@ async function generateCharacterDescriptions() {
 
     // Save the updated characters data
     fs.writeFileSync(
-      "./game/models/characters.json",
+      "./characters/characters.json",
       JSON.stringify(
         { ...charactersData, characters: updatedCharacters },
         null,

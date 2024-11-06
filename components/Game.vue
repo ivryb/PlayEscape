@@ -1,33 +1,19 @@
 <script setup>
-import Phaser from "phaser";
-
 import { useWindowSize } from "@vueuse/core";
-
-import { MainScene } from "~/game/MainScene.js";
+import { createGame, resizeGame } from "~/game/Game.js";
 
 const { width, height } = useWindowSize();
 
 const canvas = ref(null);
-const game = ref(null);
+let game = null;
 
 onMounted(() => {
-  game.value = new Phaser.Game({
-    width: width.value,
-    height: height.value,
-    parent: canvas.value,
-    scene: MainScene,
-    physics: {
-      default: "matter",
-      matter: {
-        // debug: true,
-      },
-    },
-  });
+  game = createGame(canvas.value, width.value, height.value);
 });
 
 watch([width, height], ([newWidth, newHeight]) => {
-  if (game.value) {
-    game.value.scale.resize(newWidth, newHeight);
+  if (game) {
+    resizeGame(game, newWidth, newHeight);
   }
 });
 </script>
@@ -37,6 +23,7 @@ watch([width, height], ([newWidth, newHeight]) => {
     <div ref="canvas"></div>
     <!-- fog of war -->
     <div class="absolute inset-0 fog-of-war"></div>
+    <ChatUI />
   </div>
 </template>
 

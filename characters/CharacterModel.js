@@ -79,38 +79,4 @@ export class CharacterModel {
 
     return `${this.name}_${state}_${angle}`;
   }
-
-  createShadow(scene) {
-    const shadowTextureKey = `shadowTexture_${this.name}_${Date.now()}`;
-
-    // Calculate shadow dimensions based on hitbox
-    const shadowWidth = this.hitBoxSize * 2.5;
-    const shadowHeight = this.hitBoxSize * 2.5;
-    const centerX = shadowWidth / 2;
-    const centerY = shadowHeight / 2;
-    const radius = shadowWidth / 2;
-
-    // Create shadow
-    const shadowTexture = scene.textures.createCanvas(
-      shadowTextureKey,
-      shadowWidth,
-      shadowHeight
-    );
-    const context = shadowTexture.getContext();
-    const gradient = context.createRadialGradient(
-      centerX,
-      centerY,
-      0,
-      centerX,
-      centerY,
-      radius
-    );
-    gradient.addColorStop(0, "rgba(0,0,0,0.5)");
-    gradient.addColorStop(1, "rgba(0,0,0,0)");
-    context.fillStyle = gradient;
-    context.fillRect(0, 0, shadowWidth, shadowHeight);
-    shadowTexture.refresh();
-
-    return scene.add.image(0, 0, shadowTextureKey);
-  }
 }

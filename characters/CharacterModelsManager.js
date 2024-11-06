@@ -1,5 +1,5 @@
 import { CharacterModel } from "./CharacterModel";
-import characterConfigs from "./characters.json";
+import characterConfigs from "~/characters/characters.json";
 
 class CCharacterModelsManager {
   constructor() {
