@@ -4,32 +4,14 @@ import { ScrollArea, scrollToBottom } from "@/components/ui/scroll-area";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { CornerDownLeftIcon } from "lucide-vue-next";
+import { CornerDownLeftIcon, XIcon } from "lucide-vue-next";
 
 const messages = ref([
   {
     id: 1,
-    sender: "Hero",
-    avatar: "/placeholder.svg?height=40&width=40",
-    content: "Hey everyone, watch out for the dragon!",
-  },
-  {
-    id: 2,
-    sender: "Mage",
-    avatar: "/placeholder.svg?height=40&width=40",
-    content: "I've got a spell ready. Just say when!",
-  },
-  {
-    id: 3,
-    sender: "Archer",
-    avatar: "/placeholder.svg?height=40&width=40",
-    content: "Arrows are nocked and ready to fly.",
-  },
-  {
-    id: 4,
-    sender: "Tank",
-    avatar: "/placeholder.svg?height=40&width=40",
-    content: "I'll draw its attention. You guys hit it hard!",
+    sender: "Medusa",
+    avatar: "/game/Characters/cool_thief_girl/avatar.png",
+    content: "...",
   },
 ]);
 const newMessage = ref("");
@@ -58,26 +40,32 @@ onMounted(() => {
     class="absolute top-0 left-0 w-full h-full pb-4 flex justify-center items-end"
   >
     <Card
-      class="w-1/2 h-2/5 min-h-[350px] bg-background/50 border-transparent overflow-hidden flex flex-col"
+      class="w-1/2 min-w-[400px] max-w-[600px] h-2/5 min-h-[350px] max-h-[500px] bg-background/70 overflow-hidden flex flex-col text-stone-200"
     >
-      <CardHeader class="p-2 bg-background/25">
-        <CardTitle class="text-primary text-lg font-bold">
-          Conversation with Character
-        </CardTitle>
+      <CardHeader
+        class="p-2 bg-background/50 flex flex-row justify-between items-center"
+      >
+        <CardTitle class="text-lg"> Conversation with Character </CardTitle>
+        <Button variant="ghost" size="icon" class="h-8 w-8">
+          <XIcon />
+          <span class="sr-only">Close</span>
+        </Button>
       </CardHeader>
       <ScrollArea class="flex-grow px-4" ref="scrollContainer">
         <div
           v-for="message in messages"
           :key="message.id"
-          class="flex items-start space-x-2 my-4"
+          class="flex items-start space-x-3 my-4"
         >
-          <Avatar>
+          <Avatar class="rounded-md bg-background/50">
             <AvatarImage :src="message.avatar" :alt="message.sender" />
             <AvatarFallback>{{ message.sender[0] }}</AvatarFallback>
           </Avatar>
           <div>
-            <div class="font-semibold text-primary">{{ message.sender }}</div>
-            <div class="text-secondary-foreground">{{ message.content }}</div>
+            <div class="font-semibold text-primary leading-none pt-[1px] mb-1">
+              {{ message.sender }}
+            </div>
+            <div>{{ message.content }}</div>
           </div>
         </div>
       </ScrollArea>
@@ -87,15 +75,15 @@ onMounted(() => {
             v-model="newMessage"
             type="text"
             placeholder="Type a message..."
-            class="pr-12"
+            class="pr-12 bg-background/50 h-[44px] text-stone-200"
           />
           <Button
             type="submit"
             variant="ghost"
             size="icon"
-            class="absolute right-1 top-1/2 transform -translate-y-1/2"
+            class="absolute right-1 top-1"
           >
-            <CornerDownLeftIcon class="h-4 w-4" />
+            <CornerDownLeftIcon />
             <span class="sr-only">Send message</span>
           </Button>
         </div>

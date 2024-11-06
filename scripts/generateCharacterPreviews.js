@@ -15,16 +15,17 @@ async function generateCharacterPreviews() {
     for (const character of characters) {
       const characterName = character.name;
 
-      const spritePath = `${spritesDir}/${characterName}/idle/225.png`;
+      const previewSpritePath = `${spritesDir}/${characterName}/idle/225.png`;
+      const avatarSpritePath = `${spritesDir}/${characterName}/idle/180.png`;
 
       const tmpPath = `${spritesDir}/${characterName}/tmp.png`;
       const previewPath = `${spritesDir}/${characterName}/preview.png`;
+      const avatarPath = `${spritesDir}/${characterName}/avatar.png`;
 
-      // Get dimensions from character config or use defaults
       const frameWidth = character.frameWidth || 256;
       const frameHeight = character.frameHeight || 256;
 
-      await sharp(spritePath)
+      await sharp(previewSpritePath)
         .extract({
           left: 0,
           top: 0,
@@ -35,6 +36,32 @@ async function generateCharacterPreviews() {
         .toFile(tmpPath);
 
       await sharp(tmpPath).trim().png().toFile(previewPath);
+
+      await sharp(avatarSpritePath)
+        .extract({
+          left: 0,
+          top: 0,
+          width: frameWidth,
+          height: frameHeight,
+        })
+        .png()
+        .toFile(tmpPath);
+
+      await sharp(tmpPath)
+        .trim()
+        .resize(200, 200, {
+          fit: "cover",
+          position: [
+            "redhead_archer",
+            "tough_orc_warrior",
+            "crocodile",
+            "cool_thief_girl",
+          ].includes(characterName)
+            ? "top"
+            : "center",
+        })
+        .png()
+        .toFile(avatarPath);
 
       await fs.rm(tmpPath);
 
